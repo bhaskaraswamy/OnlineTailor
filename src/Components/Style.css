@@ -1,0 +1,687 @@
+body, html,.lomadi {
+    height: 100%;
+    margin: 0;
+    
+    /* background-color: brown; */
+}
+body,html{
+    font-family: "Jost",sans-serif;
+}
+
+/* .Dev1 {
+    display: flex;
+    justify-content: space-around;
+} */
+/* .maindiv{
+    display: flex;
+    justify-content:space-between;
+} */
+/* .Dev2{
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 5em;
+}
+.maindivindex{
+    margin-top: 3em;
+    margin-left: 2em;
+}
+.deletebut{
+    color: red;
+}
+.Editbut{
+    color: green;
+}
+.rowC{
+    display: flex;
+    
+}
+
+li{
+    padding-left: 2em;
+    padding-top: 1em;
+}
+.side1{
+    border: 3px solid;
+    background-color:honeydew;
+    border-bottom-left-radius: 25px;
+    border-top-right-radius: 25px;
+    width: 266px;
+    height: 593px;
+    top: 0%;
+
+
+    margin-right: 50em;
+}
+.side3{
+    margin-top: 2em;
+    list-style: none;
+}
+.side2{
+    padding-left: 3.5em;
+    padding-top: 1em;
+}
+.side4{
+    padding-left: 3.5em;
+    padding-top: 5em;
+    bottom: 0%;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .createbut{
+      background-color: blue;
+      color: white;
+  }
+
+  input[type=text], select {
+    width: 100%;
+    padding: 1px 24px;
+    margin: -6px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 3px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+  
+  .createformdiv {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    width: 48em;
+    margin-top: 3em;
+  }
+  .error{
+      color: red;
+      font-size: 15px;
+  }
+  .confrom{
+      height: 30em;
+  }
+  .chartbar{
+      height: 2em;
+      width: 20em;
+  }
+  .createbutton{
+      color: green;
+  }
+
+  .loginformdiv1{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+  .login{
+      margin-top: 6em;
+      margin-left: 20em;
+      margin-right: 20em;
+      border: 2px solid rgb(13 110 253 / 32%);
+  }
+  .inPassword{
+      padding-left: 14px !important;;
+  }
+  .inemail{
+    padding-left: 14px !important;
+  }
+  .g{
+      padding: 0.4em;
+      width: 25em;
+  }
+  .samedivs{
+      padding: 0.3em;
+  }
+  .loginbut{
+      padding-left: 9em;
+      padding-right: 9em;
+  }
+  .outdiv{
+      display: flex;
+      justify-content: space-evenly;
+  }
+  .forgotlink{
+      font-size: 0.6em;
+      margin-right: 412px;
+  } */
+
+.lomadisec{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 8.1em;
+    padding-top: 25px;
+    /* margin-left: 3em; */
+    /* background-color: floralwhite; */
+  }
+.loimg{
+    width: 26em;
+    height: 23em;
+  }
+.lotadiv{
+    display: flex;
+    flex-direction: column;
+}
+.lomadi {
+    /* The image used */
+    background-color: white;
+
+    /* Full height */
+    margin-left: 5em;
+    margin-right: 5em;
+    
+}
+.inputtype{
+    border-radius: 1em;
+    padding: 14px 15px;
+    width: 24em;
+    border-color: #2f2e41;
+}
+.logintitle{
+    color: #2f2e41;
+}
+.logap{
+    padding: 0.5em
+}
+.lobut{
+    background-color: #b419ef;
+    color: white;
+    border-radius: 1em;
+    padding: 14px 15px;
+}
+.loimdi{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.regitext{
+    position: absolute;
+    bottom: 48px;
+    left: 158px;
+    color: #2f2e41 ;
+}
+.weltext{
+    position: absolute;
+    left: 155px;
+    top:-4px;
+}
+
+.crossbut{
+    float: right;
+    padding: 0;
+    border: none;
+    background: none;
+    color: red;
+}
+.modmain{
+    margin-top: 10em;
+    text-align: center;
+}
+.modbutt{
+    margin-top: 20px;
+}
+.buyerbut{
+    margin-right: 20px;
+    padding-right: 2em;
+    padding-left: 2em;
+}
+.Tailorbut{
+    padding-right: 2em;
+    padding-left: 2em;
+}
+.ReactModal__Content{
+    padding: 38px !important;
+}
+.regbu{
+    padding: 0;
+    border: none;
+    background: none;
+    color: #0d6efd;
+}
+.pincity{
+    display: flex;
+    justify-content: space-between;
+    width: 5em;
+    padding: 0.5em
+}
+.samepici{
+    border-radius: 1em;
+    padding: 14px 15px;
+    width: 11.8em;
+    margin-left: 0.3em;
+    border-color: #2f2e41;
+    margin-right: 4px;
+}
+.remadisec{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 2em;
+    padding-top: 25px;
+}
+.header{
+    padding: 0.5em;
+    margin-left: 8em;
+}
+.hefisdiv{
+    position: fixed;
+    /* height: 10em; */
+    width: 100%;
+    align-items: center;
+    background-color: #f4f4f4;
+    padding: 39px 0px;
+}
+.hesecdiv{
+    display: flex;
+    justify-content: space-around;
+}
+.hefordiv ul{
+    list-style-type: none;  
+    font-weight: bold;  
+    font-size: 20px; 
+    display: inline-flex;   
+}
+.hefordiv li{
+    margin-left: 1em;
+}
+.hefordiv li:hover{
+    border-bottom: 2px solid #b419ef;
+}
+.headerImg{
+    width: 26px;
+    height: 26px;
+    margin-right: 17px;
+}
+.personimg {
+    width: 28px !important;
+    height: 30px;
+}
+.headimages{
+    align-items: center;
+
+}
+.indfisdiv{
+    display: flex;
+    justify-content: space-around;
+    /* margin-top: 10em; */
+    align-items: center;
+    /* margin-top: 7em; */
+    margin-left: 5.2em;
+    padding-top: 139px;
+}
+.indimg{
+    width: 30em;
+    height: 30em;
+}
+.indsecdiv p {
+    font-size: 23px;
+}
+.indsecdiv h3{
+    font-size: 27px;
+    font-weight: bold;
+}
+.hethirdiv h3{
+    font-weight: bold;  
+    font-size: 27px; 
+}
+.indsecdiv button{
+    border-color: #b419ef;
+    background-color: white;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.indfordiv{
+    width: 100%;
+    text-align: center;
+    /* margin-top: 3em;
+    margin-left: 31em; */
+}
+.brandimgs{
+    margin-top: 2em;
+    display: flex;
+    justify-content: space-evenly;
+    
+}
+.mainind{
+    margin-bottom: 90px;
+}
+.indproddiv{
+    text-align: center;
+    width: 100%;
+}
+.indproddiv h2{
+    font-weight: bold; 
+    font-size: 20px;
+}
+.indprodiv2{
+    display: flex;
+    justify-content: space-evenly;
+}
+.indprodiv3{
+    margin-top: 10px;
+    padding: 5px;
+}
+.indprodiv3 img{
+    width: 20em;
+    height: 20em;
+}
+.indprodiv3 h4{
+    font-size: 18px;
+}
+.cardtext{
+    margin-top: 15px;
+}
+#footer{
+    background-color: #f4f4f4;
+    margin-top: 30px;
+}
+.footdiv{
+    display: flex;
+    justify-content: space-between;
+    padding: 90px;
+}
+.footerdivs h5{
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 30px;
+}
+.footerdivs ul{
+    list-style-type: none;  
+}
+.footerdivs ul li{
+    padding: 7px;
+}
+.footerdivs ul li:hover{
+    border-bottom: #b419ef;
+}
+.headimages button{
+    padding: 0;
+    border: none;
+}
+.Userdrop{
+    width: 120px;
+    height: 160px;
+    background-color: #f4f4f4;
+    position: absolute;
+    /* float: right; */
+    border-style: solid;
+    border-bottom: none;
+    border-color: #b419ef;
+    border-width: 0.5px;
+    right: 0px;
+    margin-right: 100px;
+}
+.dropmain{
+    display: flex;
+    flex-direction: column;
+   
+}
+.dropmain small{
+    font-weight: bold;
+    padding:5px;
+    border-bottom: solid;
+   
+    border-color: #b419ef;
+    border-width: 0.5px;
+}
+.dropmain small:hover{
+    
+    padding-left: 8px;
+}
+.bread{
+    height: 20px;
+    text-align: center;
+   
+    margin-left: 39em;
+}
+.booksidemain{
+    margin-top: 80px;
+}
+.bookdiv{
+    padding-top: 9em;
+}
+.booksidethir{
+    margin-left: 30px;
+}
+.booksidefor{
+    width: 1200px;
+    height: 100%;
+    margin-left: 27px;
+}
+/* .booksidefor ul {
+    list-style: none;
+}
+.booksidefor ul li{
+    padding: 10px;
+    font-size: 25px;
+} */
+.cardwith{
+    max-width: 540px;
+    margin-top: 7px;
+}
+.cardmaindiv{
+    display: flex;
+    /* justify-content: space-around; */
+}
+/* .cardhead{
+    padding-top: 50px;
+} */
+.chestinput{
+    width: 200px;
+}
+.shirtmaindiv{
+    float: center ;
+    display: flex;
+    justify-content: space-around;
+}
+.allinputsmeas{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 10px;
+}
+.twoinputscomb{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cardwidth{
+    width: 18rem;
+}
+.Tailorcards{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}
+.cardwithdate{
+    width: 18rem;
+    margin-top: 10px;
+}
+.termsmaindiv{
+    list-style: none;
+    text-align: start;
+}
+.terms{
+    display: flex;
+    flex-direction: column;
+    float: left;
+}
+.termsandcond{
+    text-align: start;
+    margin-left: 28px;
+    margin-bottom: 10px;
+}
+.skipbutton{
+    margin: 10px;
+}
+.dropmain a{
+    text-decoration: none;
+    color: black;
+    border-bottom: solid;
+    border-color: #b419ef;
+    border-width: 0.5px;
+}
+.BookTailorform{
+    margin-left: 268px;
+    margin-top: 30px;
+} 
+
+.commondivclass{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+.Tailortwodivs{
+    display: flex;
+}
+.Tailorterms{
+    margin-left: 5px;
+    margin-top: 12px;
+}
+.checkterms {
+    margin-left: 10px;
+}
+.buttonSub {
+    margin-left: 373px;
+}
+.Ordermaindiv{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.Ordersecdiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.Ordersecdiv small{
+    padding: 20px;
+}
+.ordercard{
+    max-width: 60rem;
+}
+.carditemsdiv{
+    margin: auto;
+    width: 80%;
+    margin-top: 20px;
+    /* width: 100%; */
+}
+.yourorder .labled{
+    font-size: 12px;
+    color: rgb(166, 166, 166);
+    margin-bottom: 0px;
+}
+.yourorder .d-block{
+    display: block;
+    line-height: 15px;
+    overflow: hidden;
+}
+.orderheader{
+    display: flex;
+    flex-direction: row;
+}
+.yourorderid .labled{
+    font-size: 12px;
+    color: rgb(166, 166, 166);
+    margin-bottom: 0px;
+}
+.yourorderid .d-block{
+    display: block;
+    line-height: 15px;
+    overflow: hidden;
+}
+.yourorderid{
+    margin-left: 80px;
+}
+.orderproduct span.labled{
+    float: left;
+    width: 164px;
+}
+.orderbuttons{
+    display: flex;
+    flex-direction: column;
+    /* float: right; */
+}
+.orderbuttons button{
+    border: 1px solid #ddd!important;
+    margin: 5px;
+}
+.orderbuttons button:hover{
+    background-color: #fff;
+}
+.ordercardbody{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.links{
+    text-decoration: none;
+    color: black;
+    border-bottom: none;
+    border-color: #b419ef;
+    border-style: hidden;
+}
+.hefivdiv a {
+    text-decoration: none;
+}
+#inceinput{
+    width: 35px;
+    text-align: center;
+}
+.error{
+    color: red;
+    /* font-size: 15px; */
+    margin-left: 12px;
+
+}
+.card{
+    position:unset !important;
+}
+.Dropdown-control{
+    position: unset !important;
+}
+.Dropdown-menu{
+    position: unset !important;
+}
+.Dropdown-root {
+    position: unset !important;
+}
+
+
+.meas_submit_button{
+    margin-top: 20px !important;
+}
+
+/* .cardmaindiv {
+    justify-self: unset !important;
+
+} */
+
+
+.react-calendar {
+    /* align-items: self-start; */
+    width: 1190px !important;
+    max-width: none !important;
+}
