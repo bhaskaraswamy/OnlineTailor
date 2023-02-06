@@ -8,31 +8,37 @@ import Tailorman from '../../Images/Tailorman.jpg'
 // import thirdTailorImg from '../../Images/third_Tailor_img.jpg'
 // import axios from 'axios'
 import agents from '../../api/agent'
-import { useDispatch} from 'react-redux'
-import { Addproducts } from '../../redux/productSlice'
+import { useDispatch,useSelector} from 'react-redux'
+import { Addproducts,Deleteproduct } from '../../redux/productSlice'
 import {useForm} from 'react-hook-form'
 // import {Calendar} from 'antd'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 // import dayjs from 'dayjs';
 import moment from 'moment';
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router'
+// import { Link } from 'react-router-dom'
 // import Measurement from './Measurement';
+
 
 export default function BookDress() {
     // const stylebread={
-    //     name:"--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
-    // }
+        //     name:"--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+        // }
+    const Userid=localStorage.getItem("userId");
     const [value, onChange] = useState();
-
+    const [ids,setids]=useState({shirtId:0,pantId:0,TailorId:0,date:0});
     const[Index,setIndex]=useState("");
     const[Clothes,setClothes]=useState([""]);
     const[Tailor,SetTailor]=useState("");
-    const Initialmeasurements={chestLength:"",shoulderlength:"",collerlength:"",armlength:"",waistlength:"",laglength:"",kneelength:"",thighlength:"",frontRise:"",legOpening:"",userid:""};
+    const Initialmeasurements={chestLength:"",shoulderlength:"",collerlength:"",armlength:"",waistlength:"",laglength:"",kneelength:"",thighlength:"",frontRise:"",legOpening:"",userid:Userid};
     const {register,setValue,handleSubmit,formState:{errors}}=useForm({
         defaultValues:{
             Initialmeasurements
         }
     });
+    const navigate=useNavigate();
     // const[Measurements,Setmeasurements]=useState(Initialmeasurements);
     const navarray={shirts:"nav-link active",pants:"nav-link disabled",measure:"nav-link disabled",Tailor:"nav-link disabled",datetime:"nav-link disabled",terms:"nav-link disabled"};
     const[IndexActive,SetIndexActive]=useState(navarray)
@@ -43,17 +49,11 @@ export default function BookDress() {
 
    
     const dispatch= useDispatch();
-    // const selector=useSelector(state=>state.product.products);
-
-    // console.log("productsSelector",selector);
-    // const Allclothes=[...Clothes];
-    const Userid=localStorage.getItem("userId");
-    
-    // console.log("---erorrs----",errors);
+    console.log("-----userid----------",Userid);
    const  SubmitMeasurements =(data)=>{
        console.log("__datatomeas----",data.Initialmeasurements);
-       agents.Measurements.AddMeasurement(data.Initialmeasurements);
-
+       agents.Measurements.AddMeasurement(data.Initialmeasurements).then(toast.success("successfully submited measurements"));
+       console.log(errors);
        setIndex("Tailor");
        Clickhandular({shirts:"nav-link disabled",pants:"nav-link disabled",measure:"nav-link disabled",Tailor:"nav-link active",datetime:"nav-link disabled",terms:"nav-link disabled"});
     }
@@ -64,14 +64,6 @@ export default function BookDress() {
     //     Setmeasurements({...Measurements,[name]:value});
     // }
 
-//    const  disabledate=()=>{
-//        var today,dd,mm,yyyy
-//        today=new Date();
-//        dd=today.getDate();
-//        mm=today.getMonth()+1;
-//        yyyy=today.getFullYear();
-//        return mm+"-"+dd+"-"+yyyy;
-//     }
 const disabledate = ({ activeStartDate, date, view }) => {
     return date <= new Date()
  }
@@ -80,18 +72,28 @@ const disabledate = ({ activeStartDate, date, view }) => {
     onChange(date);
     // console.log(date.toString());
     var formatedate=  moment(date).format("YYYY-MM-DD");
-    dispatch(Addproducts({type:"date",id:formatedate}));
-} 
-//  const onclickday=()=>{
-//      console.log(value);
-//  }
-  
 
+    dispatch(Addproducts({Date:formatedate}));
+    setids({...ids,date:date})
+   } 
+    console.log(ids);
 
+    const Alldata=useSelector((state)=>state.product.products);
+    const AddID=(e)=>{
+        const {name,value}=e.target
+        console.log("-----targetvalues-----",name,value);
+        setids({...ids,[name]:value});
+    }
+
+    const OnsubmitAlldata=()=>{
+        console.log("--alldata--",Object.assign({UserId:Userid}, ...Alldata));
+        agents.cart.addcart(Object.assign({UserId:Userid}, ...Alldata)).finally(toast.success("All Items added to cart successfully "));
+        navigate("/ByerIndex/Cart")
+    }
     useEffect(()=>{
-         agents.Clothes.list().then(allClothes => setClothes(allClothes));
-         agents.Measurements.GetMeasurement(Userid).then(lengths => setValue("Initialmeasurements",{chestLength:lengths.chestLength,shoulderlength:lengths.shoulderlength,collerlength:lengths.collerlength,armlength:lengths.armlength,waistlength:lengths.waistlength,laglength:lengths.laglength,kneelength:lengths.kneelength,thighlength:lengths.thighlength,frontRise:lengths.frontRise,legOpening:lengths.legOpening,userid:lengths.userid},{shouldValidate:true}));
-         agents.Users.listofTailors().then(Tailor => SetTailor(Tailor));
+        agents.Clothes.list().then(allClothes => setClothes(allClothes));
+        agents.Measurements.GetMeasurement(Userid).then(lengths => setValue("Initialmeasurements",{chestLength:lengths.chestLength,shoulderlength:lengths.shoulderlength,collerlength:lengths.collerlength,armlength:lengths.armlength,waistlength:lengths.waistlength,laglength:lengths.laglength,kneelength:lengths.kneelength,thighlength:lengths.thighlength,frontRise:lengths.frontRise,legOpening:lengths.legOpening,userid:lengths.userid},{shouldValidate:true}));
+        agents.Users.listofTailors().then(Tailor => SetTailor(Tailor));
     },[Userid,setValue]);
     
   return (
@@ -150,15 +152,15 @@ const disabledate = ({ activeStartDate, date, view }) => {
                                             <div className="twoinputscomb">
                                                 <div>
                                                     <div className="allinputsmeas">
-                                                            <label htmlFor="chest" className="form-label">Chest length</label>
-                                                            <input type="number" className="chestinput" id="chest" name="chestLength" /*value={Measurements.chestLength} onChange={OnchangeMeasurements}*/ {...register('Initialmeasurements.chestLength',{required:"Please enter chest Length"})}/>
+                                                            <label htmlFor="chest" className="form-label">Chest length(cm)</label>
+                                                            <input type="number" className="chestinput" id="chest" name="chestLength" /*value={Measurements.chestLength} onChange={OnchangeMeasurements}*/ {...register('Initialmeasurements.chestLength',{required:"Please enter chest Length",maxLength:4})}/>
                                                     </div>
                                                     <small className="error">{errors?.Initialmeasurements?.chestLength?.message}</small>
                                                 </div>
                                                 <div>
                                                     <div className="allinputsmeas">
-                                                        <label htmlFor="shoulder" className="form-label">Shoulder length</label>
-                                                        <input type="number" className="shoulderinput" id="shoulder" name="shoulderlength" /*value={Measurements.shoulderlength} onChange={OnchangeMeasurements}*/ {...register('Initialmeasurements.shoulderlength',{required:"Please enter shoulder length"})} />
+                                                        <label htmlFor="shoulder" className="form-label">Shoulder length(cm)</label>
+                                                        <input type="number" className="shoulderinput" id="shoulder" name="shoulderlength" /*value={Measurements.shoulderlength} onChange={OnchangeMeasurements}*/ {...register('Initialmeasurements.shoulderlength',{required:"Please enter shoulder length",maxLength:4})} />
                                                     </div>
                                                     <small className="error">{errors?.Initialmeasurements?.shoulderlength?.message}</small>
                                                 </div>
@@ -167,23 +169,23 @@ const disabledate = ({ activeStartDate, date, view }) => {
                                         <div className="twoinputscomb">
                                                 <div>
                                                     <div className="allinputsmeas">
-                                                        <label htmlFor="coller" className="form-label">Coller length</label>
-                                                        <input type="number" className="collerinput" id="coller" name="collerlength"  /* value={Measurements.collerlength} onChange={OnchangeMeasurements}*/  {...register('Initialmeasurements.collerlength',{required:"Please enter coller length"})} />
+                                                        <label htmlFor="coller" className="form-label">Coller length(cm)</label>
+                                                        <input type="number" className="collerinput" id="coller" name="collerlength"  /* value={Measurements.collerlength} onChange={OnchangeMeasurements}*/  {...register('Initialmeasurements.collerlength',{required:"Please enter coller length",maxLength:4})} />
                                                     </div>
                                                     <small className="error">{errors?.Initialmeasurements?.collerlength?.message}</small>
                                                 </div>
                                                 <div>
                                                     <div className="allinputsmeas">
-                                                        <label htmlFor="arm" className="form-label">Arm length</label>
-                                                        <input type="number" className="arminput" id="arm" name="armlength" /*value={Measurements.armlength} onChange={OnchangeMeasurements}*/ {...register('Initialmeasurements.armlength',{required:"Please enter arm length"})} />
+                                                        <label htmlFor="arm" className="form-label">Arm length(cm)</label>
+                                                        <input type="number" className="arminput" id="arm" name="armlength" /*value={Measurements.armlength} onChange={OnchangeMeasurements}*/ {...register('Initialmeasurements.armlength',{required:"Please enter arm length",maxLength:4})} />
                                                     </div>
                                                     <small className="error">{errors?.Initialmeasurements?.armlength?.message}</small>
                                                 </div>
                                         </div>
                                         <div>
                                             <div className="allinputsmeas">
-                                                <label htmlFor="Waist" className="form-label">Waist length</label>
-                                                <input type="number" className="Waistinput" id="Waist" name="waistlength" /*value={Measurements.waistlength} onChange={OnchangeMeasurements}*/{...register('Initialmeasurements.waistlength',{required:"Please enter waistlength"})} />
+                                                <label htmlFor="Waist" className="form-label">Waist length(cm)</label>
+                                                <input type="number" className="Waistinput" id="Waist" name="waistlength" /*value={Measurements.waistlength} onChange={OnchangeMeasurements}*/{...register('Initialmeasurements.waistlength',{required:"Please enter waistlength",maxLength:4})} />
                                             </div>
                                             <small className="error">{errors?.Initialmeasurements?.waistlength?.message}</small>
                                         </div>
@@ -193,15 +195,15 @@ const disabledate = ({ activeStartDate, date, view }) => {
                                         <div className="twoinputscomb">
                                             <div>
                                                 <div className="allinputsmeas">
-                                                        <label htmlFor="lag" className="form-label">lag length</label>
-                                                        <input type="number" className="laginput" id="lag" name="laglength" /*value={Measurements.laglength} onChange={OnchangeMeasurements}*/ {...register('Initialmeasurements.laglength',{required:"Please enter lag length"})} />
+                                                        <label htmlFor="lag" className="form-label">lag length(cm)</label>
+                                                        <input type="number" className="laginput" id="lag" name="laglength" /*value={Measurements.laglength} onChange={OnchangeMeasurements}*/ {...register('Initialmeasurements.laglength',{required:"Please enter lag length",maxLength:4})} />
                                                 </div>
                                                 <small className="error">{errors?.Initialmeasurements?.laglength?.message}</small>
                                             </div>
                                             <div>
                                                 <div className="allinputsmeas">
-                                                    <label htmlFor="knee" className="form-label">Knee length</label>
-                                                    <input type="number" className="kneeinput" id="knee" name="kneelength" /*value={Measurements.Kneelength} onChange={OnchangeMeasurements}*/ {...register('Initialmeasurements.kneelength',{required:"Please enter Knee length"})} />
+                                                    <label htmlFor="knee" className="form-label">Knee length(cm)</label>
+                                                    <input type="number" className="kneeinput" id="knee" name="kneelength" /*value={Measurements.Kneelength} onChange={OnchangeMeasurements}*/ {...register('Initialmeasurements.kneelength',{required:"Please enter Knee length",maxLength:4})} />
                                                 </div>
                                                 <small className="error">{errors?.Initialmeasurements?.kneelength?.message}</small>
                                             </div>
@@ -209,15 +211,15 @@ const disabledate = ({ activeStartDate, date, view }) => {
                                         <div className="twoinputscomb">
                                             <div>
                                                 <div className="allinputsmeas">
-                                                    <label htmlFor="Thigh" className="form-label">Thigh length</label>
-                                                    <input type="number" className="Thighinput" id="Thigh" name="thighlength" /*value={Measurements.Thighlength} onChange={OnchangeMeasurements}*/ {...register('Initialmeasurements.thighlength',{required:"Please enter Thigh length"})} />
+                                                    <label htmlFor="Thigh" className="form-label">Thigh length(cm)</label>
+                                                    <input type="number" className="Thighinput" id="Thigh" name="thighlength" /*value={Measurements.Thighlength} onChange={OnchangeMeasurements}*/ {...register('Initialmeasurements.thighlength',{required:"Please enter Thigh length",maxLength:4})} />
                                                 </div>
                                                 <small className="error">{errors?.Initialmeasurements?.thighlength?.message}</small>
                                             </div>
                                             <div>
                                                 <div className="allinputsmeas">
-                                                    <label htmlFor="FrontRise" className="form-label">Front Rise</label>
-                                                    <input type="number" className="Frontriseinput" id="FrontRise" name="frontRise" /*value={Measurements.FrontRise} onChange={OnchangeMeasurements}*/  {...register('Initialmeasurements.frontRise',{required:"Please enter Front rice length"})}/>
+                                                    <label htmlFor="FrontRise" className="form-label">Front Rise(cm)</label>
+                                                    <input type="number" className="Frontriseinput" id="FrontRise" name="frontRise" /*value={Measurements.FrontRise} onChange={OnchangeMeasurements}*/  {...register('Initialmeasurements.frontRise',{required:"Please enter Front rice length",maxLength:4})}/>
                                                 </div>
                                                 <small className="error">{errors?.Initialmeasurements?.frontRise?.message}</small>
                                             </div>
@@ -225,8 +227,8 @@ const disabledate = ({ activeStartDate, date, view }) => {
                                         <input {...register("Initialmeasurements.userid", { value: Userid })} type="hidden" />
                                         <div>
                                             <div className="allinputsmeas">
-                                                <label htmlFor="LegOpening" className="form-label">Leg Opening</label>
-                                                <input type="number" className="leginput" id="legOpening" /*value={Measurements.LegOpening} onChange={OnchangeMeasurements}*/ {...register('Initialmeasurements.legOpening',{required:"Please enter Leg Opening length"})} />
+                                                <label htmlFor="LegOpening" className="form-label">Leg Opening(cm)</label>
+                                                <input type="number" className="leginput" id="legOpening" /*value={Measurements.LegOpening} onChange={OnchangeMeasurements}*/ {...register('Initialmeasurements.legOpening',{required:"Please enter Leg Opening length",maxLength:4})} />
                                             </div>
                                             <small className="error">{errors?.Initialmeasurements?.legOpening?.message}</small>
                                         </div>
@@ -258,7 +260,10 @@ const disabledate = ({ activeStartDate, date, view }) => {
                                         <li className="list-group-item">{t.pincode}</li>
                                     </ul>
                                     <div className="card-body">
-                                    <button className="btn btn-info" onClick={()=>dispatch(Addproducts({type:"Tailor",id:t.id}))} >Add to Cart</button>
+                                    { ids.TailorId===(t.id).toString() ? (
+                                       <button className="btn btn-info" onClick={()=>{dispatch(Deleteproduct({shirtId:t.id}));setids({...ids,TailorId:0})}} >Remove from Cart</button>
+                                    ):(<button className="btn btn-info" name="TailorId" value={t.id}  onClick={(e)=>{dispatch(Addproducts({TailorId:t.id}));AddID(e)}} >Add to Cart</button>)
+                                     }
                                         {/* <button className="btn btn-info">Add</button> */}
                                     </div>
                                 </div>
@@ -268,7 +273,8 @@ const disabledate = ({ activeStartDate, date, view }) => {
                             </div>
                             <div>
                             <button onClick={()=>{setIndex("Measurements");Clickhandular({shirts:"nav-link disabled",pants:"nav-link disabled",measure:"nav-link active",Tailor:"nav-link disabled",datetime:"nav-link disabled",terms:"nav-link disabled"})}} className="btn btn-warning skipbutton">Back</button>
-                                <button onClick={()=>{setIndex("datetime");Clickhandular({shirts:"nav-link disabled",pants:"nav-link disabled",measure:"nav-link disabled",Tailor:"nav-link disabled",datetime:"nav-link active disabled",terms:"nav-link disabled"})}} className="btn btn-success">Next</button>
+                            {ids.TailorId ===0 ?(
+                            <button onClick={()=>toast.error("Please add the Tailor to cart")} className="btn btn-success">Next</button>):(<button onClick={()=>{setIndex("datetime");Clickhandular({shirts:"nav-link disabled",pants:"nav-link disabled",measure:"nav-link disabled",Tailor:"nav-link disabled",datetime:"nav-link active disabled",terms:"nav-link disabled"})}} className="btn btn-success">Next</button>)}
                             </div>
                        </div>) 
                        || (Index ==="datetime" && 
@@ -280,7 +286,9 @@ const disabledate = ({ activeStartDate, date, view }) => {
                             </div>
                             <div>
                             <button onClick={()=>{setIndex("Tailor");Clickhandular({shirts:"nav-link disabled",pants:"nav-link disabled",measure:"nav-link disabled",Tailor:"nav-link active",datetime:"nav-link disabled",terms:"nav-link disabled"})}} className="btn btn-warning skipbutton">Back</button>
-                               <button onClick={()=>{setIndex("terms");Clickhandular({shirts:"nav-link disabled",pants:"nav-link disabled",measure:"nav-link disabled",Tailor:"nav-link disabled",datetime:"nav-link disabled",terms:"nav-link active"})}}  className="btn btn-success">Next</button>
+                            {ids.date ===0 ?(
+                               <button onClick={()=>toast.error("Please select the date")}  className="btn btn-success">Next</button>):(<button onClick={()=>{setIndex("terms");Clickhandular({shirts:"nav-link disabled",pants:"nav-link disabled",measure:"nav-link disabled",Tailor:"nav-link disabled",datetime:"nav-link disabled",terms:"nav-link active"})}}  className="btn btn-success">Next</button>)
+                            }
                             </div>
                         </div>) 
                        || (Index==="terms" && <div className="terms">
@@ -296,7 +304,7 @@ const disabledate = ({ activeStartDate, date, view }) => {
                                 <input className="form-check-input me-1" type="checkbox" value="" aria-label="..."/>
                                 I Accept Terms & Conditions  
                            </div>
-                           <button className="btn btn-success">Submit</button>
+                           <button  onClick={()=>OnsubmitAlldata()} className="btn btn-success">Submit</button>
                            <button onClick={()=>{setIndex("datetime");Clickhandular({shirts:"nav-link disabled",pants:"nav-link disabled",measure:"nav-link disabled",Tailor:"nav-link disabled",datetime:"nav-link active",terms:"nav-link disabled"})}} className="btn btn-warning">Back</button>
                        </div>) 
                        || (Index==="shirts" && 
@@ -315,7 +323,10 @@ const disabledate = ({ activeStartDate, date, view }) => {
                                                     <h5 className="card-title" key={x.id}>{x.clotheName}</h5>
                                                     <p className="card-text">{x.clotheDescription}</p>
                                                     <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-                                                    <button className="btn btn-info" onClick={()=>dispatch(Addproducts({type:"shirt",id:x.id}))} >Add to Cart</button>
+                                                    { ids.shirtId=== (x.id).toString() ? (
+                                                    <button className="btn btn-info" onClick={()=>{dispatch(Deleteproduct({shirtId:x.id}));setids({...ids,shirtId:0})}} >Remove from Cart</button>
+                                                    ):(<button className="btn btn-info" name="shirtId" value={x.id} onClick={(e)=>{dispatch(Addproducts({shirtId:x.id}));AddID(e)}} >Add to Cart</button>)
+                                                     }
                                                     {/* <button class="plus_minus">+</button>
                                                     <span class="number">1</span>
                                                     <button class="minus_plus">-</button> */}
@@ -329,7 +340,10 @@ const disabledate = ({ activeStartDate, date, view }) => {
                             </div> 
                             <div>
                                 <button onClick={()=>{setIndex("pants");Clickhandular({shirts:"nav-link disabled",pants:"nav-link active",measure:"nav-link disabled",Tailor:"nav-link disabled",datetime:"nav-link disabled",terms:"nav-link disabled"})}}  className="btn btn-danger skipbutton">Skip</button>
-                                <button onClick={()=>{setIndex("pants");Clickhandular({shirts:"nav-link disabled",pants:"nav-link active",measure:"nav-link disabled",Tailor:"nav-link disabled",datetime:"nav-link disabled",terms:"nav-link disabled"})}} className="btn btn-success">Next</button>
+                                {ids.shirtId ===0 ?(
+                                    
+                                    <button  onClick={()=>toast.error("Please select the pant")} className="btn btn-success">Next</button>):(<button   onClick={()=>{setIndex("pants");Clickhandular({shirts:"nav-link disabled",pants:"nav-link active",measure:"nav-link disabled",Tailor:"nav-link disabled",datetime:"nav-link disabled",terms:"nav-link disabled"})}} className="btn btn-success">Next</button>)
+                                }
                             </div>
                         </div>  )
                        || (Index ==="pants" && 
@@ -348,7 +362,10 @@ const disabledate = ({ activeStartDate, date, view }) => {
                                                     <h5 className="card-title" key={x.id}>{x.clotheName}</h5>
                                                     <p className="card-text">{x.clotheDescription}</p>
                                                     <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-                                                    <button className="btn btn-info" onClick={()=>dispatch(Addproducts({type:"pant",id:x.id}))} >Add to Cart</button>
+                                                    { ids.pantId===(x.id).toString() ? (
+                                                    <button className="btn btn-info" onClick={()=>{dispatch(Deleteproduct({shirtId:x.id}));setids({...ids,pantId:0})}} >Remove from Cart</button>
+                                                    ):(<button className="btn btn-info" name="pantId" value={x.id} onClick={(e)=>{dispatch(Addproducts({pantId:x.id}));AddID(e)}} >Add to Cart</button>)
+                                                    }
                                                 </div>
                                                 </div>
                                             </div>
@@ -363,8 +380,9 @@ const disabledate = ({ activeStartDate, date, view }) => {
                                  {Shirtskip ?(
                                 ""
                                  ):(<button onClick={()=>{setIndex("Measurements");Clickhandular({shirts:"nav-link disabled",pants:"nav-link disabled",measure:"nav-link active",Tailor:"nav-link disabled",datetime:"nav-link disabled",terms:"nav-link disabled"})}} className="btn btn-danger skipbutton">Skip</button>)}
-                            
-                                <button onClick={()=>{setIndex("Measurements");Clickhandular({shirts:"nav-link disabled",pants:"nav-link disabled",measure:"nav-link active",Tailor:"nav-link disabled",datetime:"nav-link disabled",terms:"nav-link disabled"})}} className="btn btn-success skipbutton">Next</button>
+                                {ids.pantId ===0 ?(
+                                <button onClick={()=>toast.error("Please select the pant")} className="btn btn-success skipbutton" >Next</button>):(<button onClick={()=>{setIndex("Measurements");Clickhandular({shirts:"nav-link disabled",pants:"nav-link disabled",measure:"nav-link active",Tailor:"nav-link disabled",datetime:"nav-link disabled",terms:"nav-link disabled"})}} className="btn btn-success skipbutton">Next</button>)
+                                 }
                             </div>
                         </div>) 
                         ||
@@ -384,7 +402,10 @@ const disabledate = ({ activeStartDate, date, view }) => {
                                                     <h5 className="card-title" key={x.id}>{x.clotheName}</h5>
                                                     <p className="card-text">{x.clotheDescription}</p>
                                                     <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-                                                    <button className="btn btn-info" onClick={()=>dispatch(Addproducts({type:"shirt",id:x.id}))} >Add to Cart</button>
+                                                    { ids.shirtId=== (x.id).toString() ? (
+                                                    <button className="btn btn-info" onClick={()=>{dispatch(Deleteproduct({shirtId:x.id}));setids({...ids,shirtId:0})}} >Remove from Cart</button>
+                                                    ):( <button className="btn btn-info" name="shirtId" value={x.id} onClick={(e)=>{dispatch(Addproducts({shirtId:x.id}));AddID(e)}} >Add to Cart</button> )
+                                                    }
                                                 </div>
                                                 </div>
                                             </div>
@@ -410,7 +431,10 @@ const disabledate = ({ activeStartDate, date, view }) => {
                             </div>
                             <div>
                                 <button  onClick={()=>{setIndex("pants");Clickhandular({shirts:"nav-link disabled",pants:"nav-link active",measure:"nav-link disabled",Tailor:"nav-link disabled",datetime:"nav-link disabled",terms:"nav-link disabled"});SetShirtskip(true)}}  className="btn btn-danger skipbutton">Skip</button>
-                                <button  onClick={()=>{setIndex("pants");Clickhandular({shirts:"nav-link disabled",pants:"nav-link active",measure:"nav-link disabled",Tailor:"nav-link disabled",datetime:"nav-link disabled",terms:"nav-link disabled"})}} className="btn btn-success">Next</button>
+                                {ids.shirtId ===0 ?(
+                                    
+                                 <button  onClick={()=>toast.error("Please select the Shirt")} className="btn btn-success">Next</button>):(<button   onClick={()=>{setIndex("pants");Clickhandular({shirts:"nav-link disabled",pants:"nav-link active",measure:"nav-link disabled",Tailor:"nav-link disabled",datetime:"nav-link disabled",terms:"nav-link disabled"})}} className="btn btn-success">Next</button>)
+                                 }
                             </div>
                         </div>    
                        }

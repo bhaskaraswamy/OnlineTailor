@@ -16,7 +16,7 @@ import FrontendLogin from "./Components/Frontend/FrontendLogin";
 import SelectUserType from "./Components/Frontend/SelectUserType";
 import Registration from "./Components/Frontend/Registration";
 import Measurement from "./Components/Frontend/Measurement";
-import RegistrationforTailor from "./Components/Frontend/RegistrationforTailor";
+import Cart from "./Components/Frontend/Cart";
 import Header from "./Components/Frontend/Header";
 import Home from "./Components/Frontend/Home";
 import TailorHeader from "./Components/Frontend/TailorHeader";
@@ -42,11 +42,11 @@ function App() {
              <Route path="/SelectUserType" element={<SelectUserType/>}/>
              <Route path="/Registration/:user" element={<Registration/>}/>
              <Route path="/Measurements" element={<Measurement/>}/>
-             <Route path="/RegistrationForTailor" element={<RegistrationforTailor/>}/>
              <Route path="/ByerIndex" element={<Header/>}>
                <Route index element={<Home/>}/>
                <Route path="BookDress" element={<BookDress/>}/>
                <Route path="BookTailor" element={<BookTailor/>}/>
+               <Route path="Cart" element={<Cart/>}/>
              </Route>
              <Route path="/TailorIndex" element={<TailorHeader/>}>
                <Route index element={<TailorHome/>}/>

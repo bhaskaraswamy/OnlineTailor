@@ -234,11 +234,13 @@ table {
     color: red;
 }
 .modmain{
-    margin-top: 10em;
+    margin-top: 6em;
     text-align: center;
 }
 .modbutt{
     margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 .buyerbut{
     margin-right: 20px;
@@ -593,6 +595,11 @@ table {
     color: rgb(166, 166, 166);
     margin-bottom: 0px;
 }
+.modbutt .labled{
+    font-size: 16px;
+    color: rgb(166, 166, 166);
+    margin-bottom: 0px;
+}
 .yourorder .d-block{
     display: block;
     line-height: 15px;
@@ -615,6 +622,10 @@ table {
 .yourorderid{
     margin-left: 80px;
 }
+.orderproduct{
+    display: flex;
+}
+
 .orderproduct span.labled{
     float: left;
     width: 164px;
@@ -685,3 +696,37 @@ table {
     width: 1190px !important;
     max-width: none !important;
 }
+.clothimg {
+    width: 180px;
+    height: 220px;
+}
+.Descrption{
+    display:block;text-overflow: ellipsis;width: 150px;overflow: hidden; white-space: nowrap;
+}
+.orderproductfirst{
+    margin-right: 40px;
+}
+.ReactModal__Content{
+    width: 470px;
+    height: 500px;
+    margin-left: 410px;
+}
+.modbutt img{
+    width: 200px;
+    height: 200px;
+}
+.flexelements{
+    display: flex;
+    /* justify-content: space-around; */
+}
+.flexelements{
+    display: inline-block;
+    width: 160px;
+}
+/* ul {
+    list-style-type: none;
+  } */
+
+  ol li{
+      margin-bottom: 18px;
+  }

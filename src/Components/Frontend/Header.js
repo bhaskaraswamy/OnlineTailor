@@ -44,7 +44,7 @@ export default function Header() {
             <div className="headimages">
                <img className="headerImg" src={search} alt="img"/>
                <button  onClick={Clickdropdowm}><img className="headerImg personimg" src={personimg} alt="img"/></button>
-               <img className="headerImg" src={cart} alt="cartimg"/>
+               <Link to={"Cart"} ><img className="headerImg" src={cart} alt="cartimg"/></Link>
             </div>
         </div>
         {Userdrop&&<div className="Userdrop">

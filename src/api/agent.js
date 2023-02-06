@@ -39,7 +39,11 @@ const requests={
     post:(url,body)=>axios.post(url,body).then(requestUrl),
     delete:(url)=>axios.delete(url).then(requestUrl),
 }
-
+const cart={
+    addcart:(body)=>requests.post('Carts',body),
+    getCart:(userid)=>requests.get(`Carts/GetUserCartItems/${userid}`),
+    DeleteCartItem:(id)=>requests.delete(`Carts/${id}`)
+}
 const Measurements={
     AddMeasurement:(body)=>requests.post('Measurements',body),
     GetMeasurement:(userid)=>requests.get(`Measurements/GetmeasurementUsingUserid/${userid}`)
@@ -55,11 +59,18 @@ const Authentication={
     login:(body)=>requests.post('Authentication/login',body)
 }
 
+const Tailor={
+    AddUserData:(body)=>requests.post('BookingTylers',body)
+}
+
+
 const agents={
     Clothes,
     Authentication,
     Measurements,
-    Users
+    Users,
+    cart,
+    Tailor
 }
 
 export default agents;

@@ -99,7 +99,7 @@ export default function FrontendLogin() {
         <button className="crossbut" onClick={()=>SetModal(false)}>X</button>
         <div className="modmain">
           <div>
-           <h2>Please select which type of User you are</h2>
+           <h6>Please select which type of User you are</h6>
           </div>
           <div className="modbutt">
            <Link to={{pathname: `/Registration/${"Buyer"}`}}> <button type="button" className="btn btn-primary buyerbut">Buyer</button></Link>
